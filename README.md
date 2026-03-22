@@ -1,34 +1,34 @@
 # PerfectAgentTeam
 
-PerfectAgentTeam, kurumsal standartlarda cok-agentli yazilim gelistirme akisini standardize etmek icin tasarlanmis bir agent konfigurasyon reposudur.
+PerfectAgentTeam is an agent configuration repository designed to standardize multi-agent software development workflow at enterprise standards.
 
-## Nedir?
+## What is it?
 
-Bu repo, farkli sorumluluk alanlarina ayrilmis agent tanimlari ve merkezi yonetim kurallari sunar:
+This repository provides agent definitions separated by different responsibility areas and centralized management rules:
 
-- Uzmanlik bazli agent rolleri
-- Deterministic karar zinciri
-- Guvenlik, kalite ve tutarlilik gate'leri
-- Uretim ortami odakli (production-ready) calisma modeli
+- Expertise-based agent roles
+- Deterministic decision chain
+- Security, quality and consistency gates
+- Production-ready working model
 
-## Icerik
+## Contents
 
-- `.github/agents/`: Rol bazli agent tanimlari
-- `.github/copilot-instructions.md`: Tum sistem icin birlesik davranis, kalite ve guvenlik kurallari
+- `.github/agents/`: Role-based agent definitions
+- `.github/copilot-instructions.md`: Unified behavior, quality and security rules for the entire system
 
-## Tasarim Ilkeleri
+## Design Principles
 
-- Guvenlik once gelir
-- State tutarliligi zorunludur
-- Test ve dogrulama olmadan merge yapilmaz
-- Belirsiz kararlar yerine acik, izlenebilir karar kaydi tutulur
+- Security comes first
+- State consistency is mandatory
+- No merge without test and validation
+- Clear, traceable decision records instead of ambiguous decisions
 
-## Kullanim
+## Usage
 
-1. Repoyu klonlayin.
-2. Agent tanimlarini ihtiyaca gore ozellestirin.
-3. `copilot-instructions.md` icindeki zorunlu gate ve workflow kurallarini takip edin.
+1. Clone the repository.
+2. Customize agent definitions according to your needs.
+3. Follow the mandatory gate and workflow rules in `copilot-instructions.md`.
 
-## Hedef
+## Goal
 
-Amac, tek bir agente bagimli olmayan; denetlenebilir, guvenli ve surdurulebilir bir gelistirme sistemi kurmaktir.
+The goal is to build an auditable, secure and sustainable development system that does not depend on a single agent.

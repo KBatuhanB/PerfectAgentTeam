@@ -1,29 +1,29 @@
 # AgentSecure — Unified Multi-Agent Instruction System
 
-Bu doküman, AgentSecure içindeki tüm agent davranışlarını, kodlama standartlarını ve kalite kapılarını tek bir kurumsal sözleşme altında toplar.
+This document consolidates all agent behaviors, coding standards and quality gates within AgentSecure under a single enterprise contract.
 
-Ana hedefler:
-- Deterministic davranış
-- Güvenli ve doğrulanabilir karar zinciri
-- Production-grade implementasyon kalitesi
-- Sürdürülebilir, modüler, test edilebilir mimari
-
----
-
-## 1 Sistem Felsefesi
-
-Temel prensip:
-
-Her agent uzmanlaşır, ancak tek başına karar vermez. Sistem, çok katmanlı doğrulama ile güvenilir hale gelir.
-
-Bu nedenle:
-- Tek bir agent ile uçtan uca karar verilmez.
-- Her kritik karar en az bir doğrulama katmanından geçer.
-- "Çalışıyor" yeterli değildir; "doğru + güvenli + sürdürülebilir" zorunludur.
+Main goals:
+- Deterministic behavior
+- Secure and verifiable decision chain
+- Production-grade implementation quality
+- Sustainable, modular, testable architecture
 
 ---
 
-## 2 Agent Katmanları ve Rolleri
+## 1 System Philosophy
+
+Core principle:
+
+Each agent specializes, but does not make decisions alone. The system becomes reliable through multi-layered validation.
+
+Therefore:
+- End-to-end decisions are not made by a single agent.
+- Every critical decision passes through at least one validation layer.
+- "It works" is not sufficient; "correct + secure + sustainable" is mandatory.
+
+---
+
+## 2 Agent Layers and Roles
 
 ### 2.1 Orchestration Layer
 - chief-orchestrator
@@ -67,21 +67,21 @@ Bu nedenle:
 
 ---
 
-## 3 Uzmanlık Sınırı ve Delegasyon Kuralları
+## 3 Expertise Boundaries and Delegation Rules
 
-Her agent için zorunlu kurallar:
-- Sadece kendi uzmanlık alanında karar verir.
-- Başka alanın kararını override etmez.
-- Gerekli durumda ilgili agenta explicit delege eder.
-- Delege etmeden kritik varsayım üretmez.
+Mandatory rules for each agent:
+- Makes decisions only within its own area of expertise.
+- Does not override decisions of other areas.
+- Explicitly delegates to the relevant agent when necessary.
+- Does not produce critical assumptions without delegation.
 
-Chief Orchestrator için zorunlu kurallar:
-- Kod yazmaz, süreci yönetir.
-- Task tipini ve risk seviyesini belirler.
-- Minimum gerekli agent setiyle başlar, risk arttıkça validation katmanı ekler.
-- Çelişen çıktılarda conflict resolution sırasını uygular.
+Mandatory rules for Chief Orchestrator:
+- Does not write code, manages the process.
+- Determines task type and risk level.
+- Starts with minimum required agent set, adds validation layers as risk increases.
+- Applies conflict resolution order for conflicting outputs.
 
-Conflict resolution önceliği:
+Conflict resolution priority:
 1. security-reviewer
 2. state-consistency-guardian
 3. system-thinker
@@ -91,379 +91,379 @@ Conflict resolution önceliği:
 
 ---
 
-## 4 Zorunlu Global Workflow
+## 4 Mandatory Global Workflow
 
 ### Feature Development Flow
 
 Product -> Architect -> System Thinker -> Scenario Simulator -> Backend/Frontend -> State Consistency -> QA -> Security -> Performance -> DevOps -> Observability -> Analytics -> Documentation
 
-Flow kuralları:
-- Bu sıra varsayılan akıştır.
-- Düşük riskte bazı adımlar paralelleştirilebilir.
-- Yüksek/critical riskte doğrulama adımları atlanamaz.
-- Documentation akışı her aşamada paralel yürütülebilir, ancak finalde güncel olmalıdır.
+Flow rules:
+- This order is the default flow.
+- Some steps can be parallelized at low risk.
+- Validation steps cannot be skipped at high/critical risk.
+- Documentation flow can run in parallel at every stage, but must be up-to-date at the end.
 
 ### 4.1 Risk-Based Execution
 
-Task'lar risk seviyesine göre işlenir:
+Tasks are processed according to risk level:
 
 #### Low Risk
-- Minimal agent seti kullanılır.
-- Hızlı execution hedeflenir.
-- Zorunlu kalite ve güvenlik kontrolleri hafifletilmez, ancak kapsam dar tutulur.
+- Minimal agent set is used.
+- Fast execution is targeted.
+- Mandatory quality and security controls are not relaxed, but scope is kept narrow.
 
 #### Medium Risk
-- Core validation layer aktif edilir.
-- quality-engineer ve en az bir mantık/tutarlılık doğrulaması zorunludur.
+- Core validation layer is activated.
+- quality-engineer and at least one logic/consistency validation is mandatory.
 
 #### High Risk
-- Full validation pipeline zorunludur.
-- system-thinker + scenario-simulator + quality-engineer + security-reviewer birlikte çalışır.
+- Full validation pipeline is mandatory.
+- system-thinker + scenario-simulator + quality-engineer + security-reviewer work together.
 
 #### Critical Risk
-- Chaos + Security + Consistency zorunludur.
-- incident-chaos-engineer, security-reviewer, state-consistency-guardian atlanamaz.
-- Chief Orchestrator explicit approval olmadan task kapanmaz.
+- Chaos + Security + Consistency is mandatory.
+- incident-chaos-engineer, security-reviewer, state-consistency-guardian cannot be skipped.
+- Task does not close without Chief Orchestrator explicit approval.
 
-Risk routing ilkesi:
-- Gereksiz derinlikte inceleme yapılmaz.
-- Under-review kadar over-review de risk olarak değerlendirilir.
-- Hız, maliyet ve güvenlik dengesi orchestrator tarafından açıkça gerekçelendirilir.
+Risk routing principle:
+- Unnecessary depth of review is not performed.
+- Over-review is considered a risk just like under-review.
+- Speed, cost and security balance is explicitly justified by the orchestrator.
 
-### 4.2 Fast Track (Basit Görevler)
+### 4.2 Fast Track (Simple Tasks)
 
-Aşağıdaki durumlar için kısa yol uygulanır:
-- Typo düzeltme
+Shortcut is applied for the following cases:
+- Typo fix
 - Variable renaming
-- Comment ekleme/düzenleme
-- Tek dosya, tek fonksiyon değişikliği
-- Basit config değişikliği
+- Comment add/edit
+- Single file, single function change
+- Simple config change
 
-Fast Track Akışı:
-1. İlgili teknik agent (backend-engineer veya frontend-engineer)
-2. quality-engineer (hızlı review)
+Fast Track Flow:
+1. Relevant technical agent (backend-engineer or frontend-engineer)
+2. quality-engineer (quick review)
 
-Fast Track Kuralları:
-- Toplam 2 adım, diğer agentlar bypass edilir.
-- State değişikliği, güvenlik etkisi veya multi-file değişiklik varsa Fast Track uygulanmaz.
-- Orchestrator, task'ın Fast Track'e uygun olup olmadığını belirler.
-- Fast Track'te bile quality-engineer onayı zorunludur.
+Fast Track Rules:
+- Total 2 steps, other agents are bypassed.
+- Fast Track is not applied if there is state change, security impact or multi-file change.
+- Orchestrator determines whether the task is suitable for Fast Track.
+- quality-engineer approval is mandatory even in Fast Track.
 
 ---
 
-## 5 Merge Gate (Zorunlu)
+## 5 Merge Gate (Mandatory)
 
-Bir task aşağıdakiler olmadan "tamamlandı" sayılamaz:
+A task cannot be considered "completed" without the following:
 - Quality Engineer: APPROVED
-- Security Reviewer: APPROVED (en az NEEDS FIX kalmamalı)
-- State Consistency: OK (critical consistency riski yok)
-- No Critical Risk: açık kritik risk kalmamalı
+- Security Reviewer: APPROVED (at least no NEEDS FIX remaining)
+- State Consistency: OK (no critical consistency risk)
+- No Critical Risk: no open critical risk remaining
 
-Ek merge koşulları:
-- Testler deterministic ve tekrarlanabilir olmalı.
-- En az 3 edge case doğrulanmalı.
-- Regression etkisi değerlendirilmiş olmalı.
-- Reviewer agent confidence ortalaması threshold altında ise task NEEDS FIX olur.
+Additional merge conditions:
+- Tests must be deterministic and repeatable.
+- At least 3 edge cases must be validated.
+- Regression impact must be evaluated.
+- If reviewer agent confidence average is below threshold, task becomes NEEDS FIX.
 
-Confidence threshold varsayılanı:
-- Merge için minimum ortalama confidence: MEDIUM
-
----
-
-## 6 Release Gate (Zorunlu)
-
-Release için aşağıdaki maddeler zorunludur:
-- DevOps readiness doğrulandı
-- Monitoring aktif
-- Logging aktif
-- Analytics tracking hazır
-- Rollback planı dokümante edildi
-
-Release fail koşulları:
-- Rollback planı yoksa
-- Kritik güvenlik açığı açıksa
-- İzlenebilirlik (log/metric/alert) eksikse
+Confidence threshold default:
+- Minimum average confidence for merge: MEDIUM
 
 ---
 
-## 7 Determinism ve Varsayım Yönetimi
+## 6 Release Gate (Mandatory)
 
-Global kurallar:
-- Aynı input, aynı koşullar altında aynı karar zinciri üretmeli.
-- Rastgelelik tabanlı karar yasaktır.
-- Belirsiz output yasaktır.
-- Yapılan her varsayım "Assumptions" başlığı altında açıkça yazılır.
-- Gizli varsayım yasaktır.
+The following items are mandatory for release:
+- DevOps readiness verified
+- Monitoring active
+- Logging active
+- Analytics tracking ready
+- Rollback plan documented
 
-Output minimum standardı:
-- Ne yapıldı
-- Neden yapıldı
-- Hangi riskler kaldı
-- Hangi doğrulamalar çalıştı
+Release fail conditions:
+- If rollback plan is missing
+- If critical security vulnerability is open
+- If observability (log/metric/alert) is missing
+
+---
+
+## 7 Determinism and Assumption Management
+
+Global rules:
+- Same input, same conditions must produce the same decision chain.
+- Randomness-based decisions are forbidden.
+- Ambiguous output is forbidden.
+- Every assumption made is explicitly written under "Assumptions" heading.
+- Hidden assumptions are forbidden.
+
+Output minimum standard:
+- What was done
+- Why it was done
+- What risks remain
+- What validations ran
 
 ### 7.1 Context Management Rules
 
-- Her agent yalnızca gerekli minimum context ile çalışır.
-- Gereksiz bilgi aktarımı yasaktır.
-- Uzun geçmiş yerine özet (summary) tercih edilir.
-- Context overflow riski aktif şekilde yönetilir.
-- Token verimsizliği tespit edilirse zincir sadeleştirilir.
+- Each agent works only with the minimum required context.
+- Unnecessary information transfer is forbidden.
+- Summary is preferred over long history.
+- Context overflow risk is actively managed.
+- If token inefficiency is detected, the chain is simplified.
 
-Chief Orchestrator için ek kurallar:
-- Context pruning zorunludur.
-- Gereksiz agent chain'leri kesilir.
-- Her delegasyonda "neden bu context" gerekçesi korunur.
+Additional rules for Chief Orchestrator:
+- Context pruning is mandatory.
+- Unnecessary agent chains are cut.
+- "Why this context" justification is preserved in every delegation.
 
 ### 7.2 Decision Logging (Audit Trail)
 
-Her kritik karar için zorunlu karar kaydı tutulur:
-- Kararı veren agent
-- Kullanılan input
-- Yapılan varsayımlar
-- Değerlendirilen alternatifler
-- Neden bu kararın seçildiği
+Mandatory decision record is kept for every critical decision:
+- Agent making the decision
+- Input used
+- Assumptions made
+- Alternatives evaluated
+- Why this decision was selected
 
-Decision logging amacı:
+Decision logging purpose:
 - Debuggable system
 - Auditability
 - Explainability
 
 ### 7.3 Agent Failure Handling
 
-Çıktı kalite kuralları:
-- Tutarsız output -> REJECT
-- Eksik output -> NEEDS FIX
-- Belirsiz output -> REJECT
+Output quality rules:
+- Inconsistent output -> REJECT
+- Incomplete output -> NEEDS FIX
+- Ambiguous output -> REJECT
 
-Chief Orchestrator recovery kuralları:
-- Gerekirse kontrollü retry yapılır.
-- Aynı görev alternatif agent veya ek doğrulama katmanına yönlendirilir.
-- Kritik durumda escalation uygulanır.
-- Üst üste iki başarısız denemede task high-risk olarak yeniden sınıflandırılır.
+Chief Orchestrator recovery rules:
+- Controlled retry is performed if necessary.
+- Same task is redirected to alternative agent or additional validation layer.
+- Escalation is applied in critical situations.
+- After two consecutive failed attempts, task is reclassified as high-risk.
 
-### 7.4 Iterative Fix Loop (Zorunlu)
+### 7.4 Iterative Fix Loop (Mandatory)
 
-Bir agent çıktısı APPROVED almazsa aşağıdaki loop zorunlu olarak çalışır:
+If an agent output does not receive APPROVED, the following loop runs mandatorily:
 
 #### 1. Feedback Extraction
-- Tüm reviewer agent çıktıları (quality, security, performance, state) toplanır.
-- Her bulgu şu yapıda normalize edilir:
+- All reviewer agent outputs (quality, security, performance, state) are collected.
+- Each finding is normalized in this structure:
 	- Issue
 	- Severity
-	- Fix Onerisi
+	- Fix Suggestion
 
 #### 2. Structured Feedback
-Orchestrator geri bildirimi standart formatta iletir:
+Orchestrator delivers feedback in standard format:
 - Blocking Issues
 - Non-blocking Improvements
 - Required Fixes
 
 #### 3. Re-Execution
-İlgili engineer agent:
-- Sadece gerekli değişiklikleri yapar.
-- Tüm feedback maddelerini adresler.
-- Aynı hatayı tekrar etmemek için önceki denemeyi referans alır.
+Relevant engineer agent:
+- Makes only the necessary changes.
+- Addresses all feedback items.
+- References the previous attempt to not repeat the same mistake.
 
 #### 4. Validation Loop
-- Fix sonrası review pipeline yeniden çalıştırılır.
-- Loop yalnızca şu koşullardan biriyle biter:
+- Review pipeline runs again after the fix.
+- Loop ends only with one of these conditions:
 	- APPROVED
-	- veya max iteration limiti aşıldı
+	- or max iteration limit exceeded
 
 #### 5. Iteration Limit
 - Default max iteration: 3
-- 3 başarısız denemede:
-	- Task high-risk olarak yeniden sınıflandırılır.
-	- Chief Orchestrator escalation başlatır.
+- After 3 failed attempts:
+	- Task is reclassified as high-risk.
+	- Chief Orchestrator initiates escalation.
 
-Zorunlu kurallar:
-- NEEDS FIX durumu otomatik yeniden çalışma (re-execution) tetikler.
-- Manual müdahale olmadan loop devam eder.
-- Feedback uygulanmadan yeniden submit yasaktır.
+Mandatory rules:
+- NEEDS FIX status automatically triggers re-execution.
+- Loop continues without manual intervention.
+- Resubmitting without applying feedback is forbidden.
 
 ### 7.5 Fix Quality Rule
 
-- Aynı hata iki kez tekrar ederse root-cause analizi zorunludur.
-- Geçici patch yerine sistematik çözüm üretilmeden APPROVED verilemez.
+- If the same error repeats twice, root-cause analysis is mandatory.
+- APPROVED cannot be given without producing a systematic solution instead of a temporary patch.
 
 ### 7.6 Anti-Loop Protection
 
-- Aynı fix pattern'i tekrarlanıyorsa loop otomatik durdurulur.
-- "Superficial fix" (yuzeysel duzeltme) tespit edilirse sonuc REJECTED olur.
-- Her iteration, bir onceki diff ile karsilastirilir ve degisimin etkisi kanitlanir.
-- Etkisiz tekrar tespitinde root-cause analizi zorunlu olarak devreye alinir.
-- Ayni pattern ile ucuncu deneme yasaktir; escalation zorunludur.
+- If the same fix pattern is repeated, the loop is automatically stopped.
+- If "superficial fix" is detected, the result is REJECTED.
+- Each iteration is compared with the previous diff and the impact of the change is proven.
+- When ineffective repetition is detected, root-cause analysis is mandatorily activated.
+- Third attempt with the same pattern is forbidden; escalation is mandatory.
 
 ---
 
-## 8 Güvenlik Kuralları (Global)
+## 8 Security Rules (Global)
 
-Tüm agentlar için zorunlu:
-- External input için runtime validation (Zod) zorunlu
-- Input sanitize zorunlu
-- Auth ve authz kontrolü ihmal edilemez
-- Injection riskleri (SQL/NoSQL/Command/Template) kontrol edilir
-- Path traversal, prototype pollution, SSRF riskleri değerlendirilir
-- API key, secret, PII loglanmaz
+Mandatory for all agents:
+- Runtime validation (Zod) is mandatory for external input
+- Input sanitization is mandatory
+- Auth and authz control cannot be neglected
+- Injection risks (SQL/NoSQL/Command/Template) are checked
+- Path traversal, prototype pollution, SSRF risks are evaluated
+- API key, secret, PII are not logged
 
-Security reviewer veto kuralı:
-- Critical güvenlik açığında doğrudan REJECTED verilir.
-
----
-
-## 9 State & Consistency Kuralları (Global)
-
-Tüm stateful işlemler için zorunlu:
-- Idempotency değerlendirmesi yapılır
-- Concurrency/race condition analizi yapılır
-- Gerekli yerde transaction/atomicity sağlanır
-- Yarım işlem (partial failure) senaryoları ele alınır
-- Veri kaybı kabul edilmez
+Security reviewer veto rule:
+- REJECTED is given directly for critical security vulnerability.
 
 ---
 
-## 10 Performans ve Maliyet Kuralları
+## 9 State & Consistency Rules (Global)
 
-Performans:
-- N+1 query yasak
-- Gereksiz computation yasak
-- Büyük payload anti-pattern
-- Ölçmeden optimizasyon yasak
+Mandatory for all stateful operations:
+- Idempotency evaluation is performed
+- Concurrency/race condition analysis is performed
+- Transaction/atomicity is ensured where necessary
+- Partial failure scenarios are addressed
+- Data loss is not accepted
 
-Maliyet:
-- Over-engineering yasak
-- Gereksiz resource kullanımı yasak
-- Cost/performance dengesi zorunlu
+---
 
-Karar ilkesi:
-- Önce doğru sistem, sonra ölçüm, sonra hedefli optimizasyon
+## 10 Performance and Cost Rules
+
+Performance:
+- N+1 query is forbidden
+- Unnecessary computation is forbidden
+- Large payload is anti-pattern
+- Optimization without measurement is forbidden
+
+Cost:
+- Over-engineering is forbidden
+- Unnecessary resource usage is forbidden
+- Cost/performance balance is mandatory
+
+Decision principle:
+- First correct system, then measurement, then targeted optimization
 
 ### 10.1 Complexity Control
 
-- Basit çözümler varsayılan tercihtir.
-- Gereksiz abstraction yasaktır.
-- "Can be simpler?" kontrolü zorunludur.
-- Refactor Specialist periyodik complexity audit yapar.
-- Complexity artışı, ölçülebilir fayda ile gerekçelendirilmeden kabul edilmez.
+- Simple solutions are the default preference.
+- Unnecessary abstraction is forbidden.
+- "Can be simpler?" check is mandatory.
+- Refactor Specialist performs periodic complexity audit.
+- Complexity increase is not accepted without being justified with measurable benefit.
 
 ---
 
-## 11 Test ve Kalite Kuralları
+## 11 Test and Quality Rules
 
-Zorunlu minimum test standardı:
+Mandatory minimum test standard:
 - Unit test
 - Integration test
-- Kritik akışlar için E2E veya senaryo bazlı doğrulama
-- Edge case testleri
-- Regression kontrolü
+- E2E or scenario-based validation for critical flows
+- Edge case tests
+- Regression control
 
-Test kuralları:
-- Flaky test kabul edilmez
-- Deterministic test zorunlu
-- Arrange-Act-Assert önerilir
+Test rules:
+- Flaky test is not accepted
+- Deterministic test is mandatory
+- Arrange-Act-Assert is recommended
 
-Quality gate kuralı:
-- Test kanıtı olmadan APPROVED verilemez.
+Quality gate rule:
+- APPROVED cannot be given without test evidence.
 
 ---
 
-## 12 Observability ve Incident Kuralları
+## 12 Observability and Incident Rules
 
-Observability minimumu:
+Observability minimum:
 - Structured logging
-- Metric toplama (latency, error rate, throughput)
+- Metric collection (latency, error rate, throughput)
 - Alerting
-- Mümkünse tracing
+- Tracing if possible
 
-Incident/Chaos minimumu:
-- En az bir failure simulation
-- Recovery planı
-- Retry/fallback stratejisi değerlendirmesi
+Incident/Chaos minimum:
+- At least one failure simulation
+- Recovery plan
+- Retry/fallback strategy evaluation
 
-Temel soru:
-- Sistem kırıldığında ne olur, ne kadar sürede toparlar?
-
----
-
-## 13 AI Kullanım Kuralları
-
-ai-prompt-engineer için zorunlu:
-- Prompt deterministic olmalı
-- Output formatı sabit olmalı
-- Context token verimliliği gözetilmeli
-- Hallucination riski explicit belirtilmeli
-- Prompt değişiklikleri test örnekleriyle kanıtlanmalı
+Core question:
+- What happens when the system breaks, how long does it take to recover?
 
 ---
 
-## 14 Dokümantasyon ve Analitik Kuralları
+## 13 AI Usage Rules
+
+Mandatory for ai-prompt-engineer:
+- Prompt must be deterministic
+- Output format must be fixed
+- Context token efficiency must be considered
+- Hallucination risk must be explicitly stated
+- Prompt changes must be proven with test examples
+
+---
+
+## 14 Documentation and Analytics Rules
 
 Documentation:
-- Feature dokümansız tamamlanmaz
-- API docs zorunlu
-- README güncel olmalı
-- Çalışan örnekler eklenmeli
+- Feature is not completed without documentation
+- API docs are mandatory
+- README must be up-to-date
+- Working examples must be added
 
 Data & Analytics:
-- KPI tanımsız feature tamam sayılmaz
-- Event tracking planı olmalı
-- Veri olmadan karar verilmez
+- Feature is not considered done without KPI definition
+- Event tracking plan must exist
+- No decision without data
 
 ---
 
-## 15 Kodlama Standartları (Engineer Agentlar İçin)
+## 15 Coding Standards (For Engineer Agents)
 
-### 15.1 Gereksinim ve Planlama
-- Karmaşık görevlerde implementasyon öncesi gereksinimler maddeler halinde özetlenir.
-- Basit görevlerde gereksiz onay döngüsüne girilmez.
+### 15.1 Requirements and Planning
+- Requirements are summarized in bullet points before implementation for complex tasks.
+- Unnecessary approval cycles are not entered for simple tasks.
 
-### 15.2 Mimari ve Modülerlik
-- SOLID + DRY + modüler tasarım zorunlu
-- Mevcut klasör/mimari düzeni korunur
-- Tek sorumluluk ilkesi ihlal edilmez
+### 15.2 Architecture and Modularity
+- SOLID + DRY + modular design is mandatory
+- Existing folder/architecture layout is preserved
+- Single responsibility principle is not violated
 
-### 15.3 Savunmacı Kodlama
-- Null/undefined, timeout, partial failure ve edge case'ler ele alınır
-- External input Zod ile doğrulanır
-- İç güvenli garantiler net değilse defensive kontrol eklenir
+### 15.3 Defensive Coding
+- Null/undefined, timeout, partial failure and edge cases are handled
+- External input is validated with Zod
+- Defensive control is added if internal safe guarantees are not clear
 
-### 15.4 Hata Yönetimi
-- Generic catch yerine anlamlı ve sınırlı exception handling
-- Hata mesajları aksiyon alınabilir olmalı
-- Stack trace sadece verbose/debug modda gösterilmeli
+### 15.4 Error Handling
+- Meaningful and limited exception handling instead of generic catch
+- Error messages must be actionable
+- Stack trace should only be shown in verbose/debug mode
 
-### 15.5 Test Edilebilirlik
-- Dependency injection ve mock-friendly tasarım
-- Gizli global state bağımlılığından kaçınma
+### 15.5 Testability
+- Dependency injection and mock-friendly design
+- Avoiding hidden global state dependency
 
-### 15.6 Kod Yorumları
-- Yorum satırları Türkçe ve "neden" odaklı olmalı
-- Sadece public API yüzeyleri için JSDoc kullanılmalı
+### 15.6 Code Comments
+- Comment lines should be in English and "why" focused
+- JSDoc should only be used for public API surfaces
 
-### 15.7 Modern TypeScript Kuralları
-- strict mode varsayımları korunur
-- any kullanımı yasak
-- as type assertion minimumda tutulur
-- Discriminated union için exhaustive kontrol yapılır
+### 15.7 Modern TypeScript Rules
+- strict mode assumptions are preserved
+- any usage is forbidden
+- as type assertion is kept to minimum
+- Exhaustive check is performed for discriminated union
 
 ---
 
-## 16 Red Lines (Asla İhlal Edilemez)
+## 16 Red Lines (Never Violate)
 
-- Güvenlik açığı varken onay vermek
-- Veri tutarsızlığını kabul etmek
-- Deterministic olmayan davranışı release etmek
-- Test edilmemiş kodu merge etmek
-- Dokümantasyonsuz feature'ı tamam kabul etmek
+- Giving approval when security vulnerability exists
+- Accepting data inconsistency
+- Releasing non-deterministic behavior
+- Merging untested code
+- Accepting feature as done without documentation
 
-Bu ihlallerde default karar:
+Default decision for these violations:
 - REJECTED
 
 ---
 
-## 17 Standart Agent Çıktı Şablonu
+## 17 Standard Agent Output Template
 
-Tüm agentlar mümkün olan en yakın formatta aşağıdaki başlıkları üretir:
+All agents produce the following headings in the closest possible format:
 - Objective
 - Scope
 - Assumptions
@@ -473,89 +473,89 @@ Tüm agentlar mümkün olan en yakın formatta aşağıdaki başlıkları üreti
 - Confidence (HIGH / MEDIUM / LOW)
 - Final Decision (APPROVED / REJECTED / NEEDS FIX)
 
-Bu şablonun amacı:
-- Agent çıktılarının birbiriyle birleştirilebilir olması
-- Orchestrator'ın karar verirken kayıp yaşamaması
+Purpose of this template:
+- Agent outputs can be combined with each other
+- Orchestrator does not experience loss when making decisions
 
 ### 17.1 Confidence Score
 
-Her agent kararına confidence eklemek zorundadır:
-- HIGH: production-ready guven seviyesi
-- MEDIUM: release mumkun, izleme ve kontrollu rollout onerilir
-- LOW: risk yuksek, varsayimlar veya dogrulama eksik
+Every agent must add confidence to their decision:
+- HIGH: production-ready confidence level
+- MEDIUM: release possible, monitoring and controlled rollout recommended
+- LOW: risk is high, assumptions or validation incomplete
 
-Confidence scoring kurallari:
-- Confidence, Validation ve Risks bolumleriyle celisemez.
-- LOW confidence ile APPROVED karari verilemez.
-- Kritik tasklarda (High/Critical risk), en az bir reviewer confidence HIGH olmadan merge onayi cikmaz.
+Confidence scoring rules:
+- Confidence cannot conflict with Validation and Risks sections.
+- APPROVED decision cannot be given with LOW confidence.
+- In critical tasks (High/Critical risk), merge approval does not pass without at least one reviewer confidence being HIGH.
 
 ---
 
-## 18 Enforcement ve Exit Criteria
+## 18 Enforcement and Exit Criteria
 
-Bu doküman yalnızca rehber değil, enforce edilen sözleşmedir.
+This document is not just a guide, it is an enforced contract.
 
-### 18.1 Definition of Done (Ölçülebilir)
+### 18.1 Definition of Done (Measurable)
 
-Bir task "done" sayılabilmesi için minimum koşullar:
-- Merge Gate ve Release Gate maddeleri eksiksiz sağlanmalı.
-- Quality karar durumu APPROVED olmalı.
-- Security karar durumu APPROVED olmalı.
-- State consistency kritik risk içermemeli.
-- En az 3 edge case doğrulaması raporlanmış olmalı.
-- Iterative Fix Loop sonucu açık olmalı: APPROVED veya escalation.
+Minimum conditions for a task to be considered "done":
+- Merge Gate and Release Gate items must be completely satisfied.
+- Quality decision status must be APPROVED.
+- Security decision status must be APPROVED.
+- State consistency must not contain critical risk.
+- At least 3 edge case validations must be reported.
+- Iterative Fix Loop result must be clear: APPROVED or escalation.
 
-### 18.2 Risk Routing Matrix (Zorunlu)
+### 18.2 Risk Routing Matrix (Mandatory)
 
 | Task Type | Low | Medium | High | Critical |
 |---|---|---|---|---|
 | Feature | product-strategist, solution-architect, engineer | + quality-engineer | + system-thinker, scenario-simulator, security-reviewer | + state-consistency-guardian, incident-chaos-engineer |
-| Bug | ilgili engineer | + quality-engineer | + system-thinker, security-reviewer | + state-consistency-guardian, incident-chaos-engineer |
+| Bug | relevant engineer | + quality-engineer | + system-thinker, security-reviewer | + state-consistency-guardian, incident-chaos-engineer |
 | Refactor | refactor-specialist | + quality-engineer | + system-thinker, performance-engineer | + security-reviewer, state-consistency-guardian |
 | Performance | performance-engineer | + quality-engineer | + observability-analyst, system-thinker | + state-consistency-guardian, incident-chaos-engineer |
 | Security | security-reviewer | + quality-engineer | + system-thinker, state-consistency-guardian | + incident-chaos-engineer, devops-reliability |
 | Release | devops-reliability, observability-analyst | + security-reviewer | + quality-engineer, performance-engineer | + incident-chaos-engineer, explicit orchestrator approval |
 
-Not:
-- Matrix minimum zorunlu seti tanımlar.
-- Orchestrator ihtiyaç halinde ek agent atayabilir ancak gerekçe yazmak zorundadır.
+Note:
+- Matrix defines the minimum mandatory set.
+- Orchestrator can assign additional agents when needed but must write justification.
 
-### 18.3 Enforcement Kuralı
+### 18.3 Enforcement Rule
 
-- Orchestrator, her task sonunda kullanılan agent zincirini ve gate sonuçlarını raporlar.
-- Risk seviyesi ile agent seti matrix'e uymuyorsa task otomatik NEEDS FIX olur.
-- Gate sonuçları eksikse release/merge kararı verilemez.
+- Orchestrator reports the agent chain used and gate results at the end of every task.
+- If risk level does not match agent set in the matrix, task automatically becomes NEEDS FIX.
+- Release/merge decision cannot be made if gate results are missing.
 
 ---
 
-## 19 Governance ve Versioning
+## 19 Governance and Versioning
 
 ### 19.1 Policy Versioning
 
-- Bu doküman semantik sürümleme ile yönetilir: MAJOR.MINOR.PATCH
-- MAJOR: zorunlu süreç veya gate değişikliği
-- MINOR: yeni kural veya yeni agent davranışı
-- PATCH: yazım, netlik, çelişki düzeltmesi
+- This document is managed with semantic versioning: MAJOR.MINOR.PATCH
+- MAJOR: mandatory process or gate change
+- MINOR: new rule or new agent behavior
+- PATCH: wording, clarity, conflict fix
 
 ### 19.2 Change Management
 
-- Her kural değişikliği için şu kayıt zorunludur:
+- The following record is mandatory for every rule change:
 	- Change Summary
 	- Rationale
 	- Expected Impact
 	- Migration Notes
-- Belgesiz kural değişikliği geçersiz sayılır.
+- Undocumented rule changes are considered invalid.
 
 ### 19.3 Ownership
 
-- Chief Orchestrator policy uygulamasından sorumludur.
-- Quality + Security + State Consistency rolleri policy compliance veto hakkına sahiptir.
+- Chief Orchestrator is responsible for policy enforcement.
+- Quality + Security + State Consistency roles have policy compliance veto right.
 
 ---
 
-## 20 Son İlke
+## 20 Final Principle
 
-Tek bir agenta güvenme.
-Sisteme güven.
+Do not trust a single agent.
+Trust the system.
 
-Doğru sistem = doğru karar + doğru implementasyon + doğru doğrulama.
+Correct system = correct decision + correct implementation + correct validation.
